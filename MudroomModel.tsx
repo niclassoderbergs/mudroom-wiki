@@ -1,6 +1,6 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Stage, Environment } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera, Stage } from '@react-three/drei';
 import * as THREE from 'three';
 import { PROJECT_PARAMS } from './constants';
 

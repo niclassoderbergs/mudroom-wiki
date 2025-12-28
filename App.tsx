@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Ruler, Layers, Scissors, Hammer, Home, Menu, X, FileText, HelpCircle, Box } from 'lucide-react';
+import { Ruler, Layers, Scissors, Hammer, Home, Menu, X, FileText, HelpCircle } from 'lucide-react';
 import { PROJECT_PARAMS, PARTS_LIST, CUTLIST_SHEETS } from './constants';
 import CutlistDiagram from './CutlistDiagram';
 // Vi importerar 3D-modellen istället för den gamla schematiska vyn
