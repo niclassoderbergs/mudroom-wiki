@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Ruler, Layers, Scissors, Hammer, Home, Menu, X, FileText, HelpCircle } from 'lucide-react';
+import { Ruler, Layers, Scissors, Hammer, Home, Menu, X, FileText, HelpCircle, Box } from 'lucide-react';
 import { PROJECT_PARAMS, PARTS_LIST, CUTLIST_SHEETS } from './constants';
 import CutlistDiagram from './CutlistDiagram';
+// Vi importerar 3D-modellen istället för den gamla schematiska vyn
+import MudroomModel from './MudroomModel';
+// Vi behåller SchematicView om man vill se mått
 import SchematicView from './SchematicView';
 
 const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
+  const [viewMode, setViewMode] = useState<'3d' | '2d'>('3d');
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -51,7 +55,7 @@ const App: React.FC = () => {
         <div className="p-6 h-full flex flex-col">
           <div className="mb-8 hidden md:block">
             <h1 className="text-2xl font-bold font-serif text-slate-900">Mudroom Bench</h1>
-            <p className="text-sm text-slate-500 mt-2">Projekt Wiki v1.0</p>
+            <p className="text-sm text-slate-500 mt-2">Projekt Wiki v1.1</p>
           </div>
 
           <nav className="flex-1 space-y-2">
@@ -64,7 +68,8 @@ const App: React.FC = () => {
           </nav>
 
           <div className="mt-auto pt-6 border-t border-slate-100 text-xs text-slate-400">
-            Genererad från OpenSCAD källkod.
+            3D-motor: React Three Fiber<br/>
+            Källa: OpenSCAD
           </div>
         </div>
       </aside>
@@ -83,8 +88,27 @@ const App: React.FC = () => {
           </header>
 
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-8">
-            <h3 className="text-lg font-bold mb-4 text-slate-800">Schematisk Vy (Front)</h3>
-            <SchematicView />
+            <div className="flex justify-between items-center mb-4">
+               <h3 className="text-lg font-bold text-slate-800">
+                 {viewMode === '3d' ? '3D Modell' : 'Schematisk Ritning'}
+               </h3>
+               <div className="flex gap-2 bg-slate-100 p-1 rounded-lg">
+                 <button 
+                   onClick={() => setViewMode('3d')}
+                   className={`px-3 py-1 text-sm font-medium rounded-md transition-all ${viewMode === '3d' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                 >
+                   3D Vy
+                 </button>
+                 <button 
+                   onClick={() => setViewMode('2d')}
+                   className={`px-3 py-1 text-sm font-medium rounded-md transition-all ${viewMode === '2d' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                 >
+                   2D Ritning
+                 </button>
+               </div>
+            </div>
+            
+            {viewMode === '3d' ? <MudroomModel /> : <SchematicView />}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
